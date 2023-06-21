@@ -16,7 +16,7 @@ class BooksController < ApplicationController
       redirect_to books_path and return
     else
       @parameter = params[:search].downcase
-      @results = Book.where("lower(title) LIKE :search", search: "%#{@parameter}%")
+      @results = Book.where('lower(title) LIKE :search OR lower(author) LIKE :search', search: "%#{@parameter}%")
     end
   end
 
