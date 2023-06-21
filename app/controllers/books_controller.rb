@@ -3,7 +3,12 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
   # GET /books or /books.json
   def index
-    @books = Book.all
+      if params[:category].blank?
+        @books = Book.all
+      else
+        @category_id = Category.find_by(name:params[:category]).id
+        @books = Book.where(category_id: @category_id)
+      end
   end
 
   # GET /books/1 or /books/1.json
@@ -65,6 +70,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title, :author, :description)
+      params.require(:book).permit(:title, :author, :description, :category_id)
     end
 end

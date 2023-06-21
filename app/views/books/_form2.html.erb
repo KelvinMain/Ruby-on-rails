@@ -1,10 +1,10 @@
-<%= form_with(model: book) do |f| %>
-  <% if book.errors.any? %>
+<%= form_with(model: category) do |f| %>
+  <% if category.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+      <h2><%= pluralize(book.errors.count, "error") %> prohibited this category from being saved:</h2>
 
       <ul>
-        <% book.errors.each do |error| %>
+        <% category.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
