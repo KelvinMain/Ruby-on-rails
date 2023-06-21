@@ -1,0 +1,7 @@
+<h2> Search Results <h2>
+
+<% @results.each do |result| %>
+  <h2> <%= link_to result.title, result %></h2>
+  <h4> <%= truncate(result.author, length: 200) %> </h4>
+  <p> <%= truncate(result.description, length: 200) %> </p>
+<% end %>

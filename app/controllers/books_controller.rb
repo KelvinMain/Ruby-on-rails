@@ -11,6 +11,15 @@ class BooksController < ApplicationController
       end
   end
 
+  def search
+    if params[:search].blank?
+      redirect_to books_path and return
+    else
+      @parameter = params[:search].downcase
+      @results = Book.where("lower(title) LIKE :search", search: "%#{@parameter}%")
+    end
+  end
+
   # GET /books/1 or /books/1.json
   def show
   end

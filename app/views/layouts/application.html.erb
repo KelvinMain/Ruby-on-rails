@@ -8,26 +8,21 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="<%= root_path %>">Home <span class="sr-only">(current)</span></a>
+      <ul class="nav navbar-nav navbar-left">
+        <li class="nav-item">
+          <a class="nav-link" href="<%= root_path %>">All Books<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="<%= categories_path %>">All Categories</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
+
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
           <li><%= link_to 'New Book', new_book_path, class: 'navbar-link' %></li>
+          <li><%= link_to 'New Category', new_category_path, class: 'navbar-link' %></li>
           <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
         <% else %>
           <li><%= link_to "Sign Up", new_user_registration_path %></li>
@@ -39,12 +34,26 @@
 
 <div class="container">
   <div class="row">
+    <div class="col-lg-9">
+        <%= form_tag(search_path, :method => "get") do %>
+          <div class = "input-group">
+            <%= search_field_tag :search, params[:search], placeholder: "Type ", class: "form-control" %>
+            <div class = "input-group-btn">
+              <%= button_tag "Search for book", :class => 'btn btn-default btn-primary',:name => nil%>
+            </div>
+          </div>
+        <% end %>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
     <div class="col-lg-10">
       <%= yield %>
     </div>
     <div class="col-lg-2">
       <ul class="nav nav-pills nav-stacked">
-        <li><%= link_to 'All Categories', root_path %></li>
+        <li><%= link_to 'Choose Category:', "" %></li>
         <% Category.all.each do |category| %>
         <li><%= link_to category.name, books_path(category: category.name) %></li>
         <% end %>
